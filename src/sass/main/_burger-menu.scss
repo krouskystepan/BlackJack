@@ -1,0 +1,126 @@
+@use "../abstracts/" as *;
+
+.nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  isolation: isolate;
+}
+
+.navBurger {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  margin: 20px;
+  float: right;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  cursor: pointer;
+  translate: 0px;
+  transition: 0.4s;
+
+  &.active-nav {
+    translate: -75px;
+    transition: 0.5s;
+  }
+  &.active-nav span:nth-child(2) {
+    scale: 0.75 1;
+    transform-origin: center center;
+  }
+  &.active-nav span:nth-child(3) {
+    scale: 0.5 1;
+    transform-origin: center center;
+  }
+
+  span {
+    transition: 0.5s;
+    width: 100%;
+    height: 33%;
+    background-color: var(--clr-neutral-900);
+  }
+}
+
+.navContent {
+  z-index: -1;
+  position: relative;
+  width: 250px;
+  height: 100%;
+  background-color: rgb(0 0 0 / 0.6);
+  transition: 0.5s;
+  padding-top: 85px;
+  translate: 250px;
+
+  &.active-nav {
+    translate: 0px;
+  }
+}
+
+.navElement {
+  position: relative;
+  width: 100%;
+  padding: 0.5em 0;
+  display: flex;
+  justify-content: center;
+
+  &:nth-child(1) {
+    border-top: 1px solid white;
+    padding-top: 1.25em;
+  }
+
+  p {
+    color: var(--clr-neutral-100);
+    font-size: 24px;
+    font-family: "Signika";
+    display: inline-block;
+  }
+
+  select {
+    font-size: 20px;
+    margin: auto 0.5em;
+  }
+
+  .toggle {
+    margin-left: 0.5em;
+    width: 55px;
+    height: 30px;
+    background-color: var(--clr-btn-off);
+    border-radius: 35px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    .toggleSlider {
+      position: absolute;
+      top: 2.5px;
+      left: 2.5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: var(--clr-neutral-100);
+      transition: all 0.3s;
+    }
+
+    &.is-on {
+      background-color: var(--clr-btn-on);
+
+      .toggleSlider {
+        left: 27.5px;
+      }
+    }
+  }
+
+  button {
+    padding: 0.75em 1.5em;
+    border-radius: 15px;
+    border: none;
+    @include btnGradient(
+      63deg,
+      var(--clr-btn-newGameLight),
+      var(--clr-btn-newGameDark)
+    );
+    color: var(--clr-neutral-900);
+    cursor: pointer;
+  }
+}

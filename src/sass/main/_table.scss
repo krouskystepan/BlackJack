@@ -1,0 +1,7 @@
+@use "../abstracts/" as *;
+
+#table-container {
+  @include tableCircleGradient(var(--clr-table-light), var(--clr-table-dark));
+  height: 100vh;
+  overflow: hidden;
+}

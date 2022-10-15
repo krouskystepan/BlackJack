@@ -1,14 +1,2 @@
-* {
-    box-sizing: border-box;
-}
-
-div {
-    height: 190px;
-    width: 120px;
-    border-radius: 25px;
-    background: red;
-}
-
-p {
-    font-size: 24px;
-}
+@use "./base";
+@use "./main";

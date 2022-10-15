@@ -1,0 +1,10 @@
+@use "../abstracts/" as *;
+
+:root {
+  // Generate sass map to css
+  @each $color-name, $shades in $colors {
+    @each $shade, $value in $shades {
+      --clr-#{$color-name}-#{$shade}: #{$value};
+    }
+  }
+}

@@ -6,9 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
 
-    <title>Document</title>
+    <link rel="icon" href="" />
+    <title>BlackJack</title>
   </head>
   <body>
-    <script src="./js/script.js"></script>
+    <div id="table-container">
+      <!-- Navbar -->
+      <div class="nav">
+        <div class="navBurger" id="navBurger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <nav class="navContent" id="navContent">
+          <div class="navElement">
+            <p>Sounds</p>
+            <div class="toggle is-on" id="soundsTogleBtn">
+              <div class="toggleSlider"></div>
+            </div>
+          </div>
+          <div class="navElement">
+            <p>Card counting</p>
+            <div class="toggle" id="ccToggleBtn">
+              <div class="toggleSlider"></div>
+            </div>
+          </div>
+          <div class="navElement">
+            <p>Decks:</p>
+            <select name="deckNumber" id="deckNumberChoose">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option selected="selected" value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div class="navElement">
+            <p>Balance:</p>
+            <select name="balance" id="balanceChoose">
+              <option value="2500">2.5K</option>
+              <option selected="selected" value="5000">5K</option>
+              <option value="10000">10K</option>
+              <option value="25000">25K</option>
+              <option value="50000">50K</option>
+              <option value="100000">100K</option>
+            </select>
+          </div>
+          <div class="navElement">
+            <button id="newGameButton">New Game</button>
+          </div>
+        </nav>
+      </div>
+      <!-- Deck -->
+
+      <!-- Hands -->
+        <!-- Dealer Hand -->
+        <!-- Card Counting -->
+        <!-- Player Hands -->
+          <!-- N Hand -->
+          <!-- Bet Circle -->
+
+      <!-- Bottom menu -->
+      <div class="menus">
+        <div class="gameMenu">
+          <button class="menuItem" id="splitBtn">SPLIT</button>
+          <button class="menuItem" id="doubleBtn">DOUBLE</button>
+          <button class="menuItem" id="hitBtn">HIT</button>
+          <button class="menuItem" id="standBtn">STAND</button>
+        </div>
+        <div class="betMenu">
+          <button class="menuItem" id="rebetBtn">REBET</button>
+          <button class="menuItem" id="newBetBtn">NEW <br> BET</button>
+          <button class="menuItem" id="doubleBetBtn">BET 2X</button>
+        </div>
+        <div class="chipsMenu">
+          <img class="menuItem" src="./assets/img/chips/coin25.png">
+          <img class="menuItem" src="./assets/img/chips/coin5.png">
+          <img class="menuItem" src="./assets/img/chips/coin100.png">
+          <img class="menuItem" src="./assets/img/chips/coin500.png">
+          <img class="menuItem" src="./assets/img/chips/coin1k.png">
+          <img class="menuItem" src="./assets/img/chips/coin2.k.png">
+          <img class="menuItem" src="./assets/img/chips/coin5k.png">
+          <img class="menuItem" src="./assets/img/chips/coin10k.png">
+        </div>
+      </div>
+    </div>
+    <script src="./js/script.js" type="module"></script>
   </body>
 </html>

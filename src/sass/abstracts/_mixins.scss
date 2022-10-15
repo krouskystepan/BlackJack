@@ -1,0 +1,9 @@
+@mixin tableCircleGradient($clr-1, $clr-2) {
+  background-color: $clr-1;
+  background-image: radial-gradient(circle at center, $clr-1, $clr-2);
+}
+
+@mixin btnGradient($deg, $clr-1, $clr-2) {
+  background-color: $clr-1;
+  background-image: linear-gradient($deg, $clr-1, $clr-2)
+}

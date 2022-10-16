@@ -12,6 +12,18 @@
   }
 }
 
+.balance {
+  width: max-content;
+  position: absolute;
+  bottom: 125px;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+  font-family: "Signika";
+  color: var(--clr-neutral-100);
+  font-size: 28px;
+}
+
 .gameMenu,
 .betMenu,
 .chipsMenu {
@@ -25,17 +37,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  translate: 0 125px;
   transition: 0.5s all;
+  cursor: auto;
 
   .menuItem {
     border-radius: 50%;
     cursor: pointer;
     transition: 0.3s scale;
-
-    &:hover {
-      scale: 1.1;
-    }
   }
 }
 
@@ -51,10 +59,15 @@
       var(--clr-btn-bottomMenuLight),
       var(--clr-btn-bottomMenuDark)
     );
+
+    &:hover {
+      scale: 1.1;
+    }
   }
 }
 
 .gameMenu {
+  translate: 0 125px;
   .menuItem {
     margin: 1em;
   }
@@ -65,6 +78,7 @@
 }
 
 .betMenu {
+  translate: 0 125px;
   .menuItem {
     margin: 2em;
   }
@@ -75,10 +89,23 @@
 }
 
 .chipsMenu {
-  translate: 0 0px;
   width: 820px;
+  translate: 0 125px;
+
+  &.active-menu {
+    translate: 0 0px;
+  }
 
   .menuItem {
-    margin: .75em;
+    margin: 0.75em;
+
+    &:hover {
+      scale: 1.15;
+    }
+
+    &.selected {
+      scale: 1.2;
+      box-shadow: 0px 1px 7.5px 0px var(--clr-neutral-100);
+    }
   }
 }

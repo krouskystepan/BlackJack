@@ -1,10 +1,10 @@
 // Toggle navbar
 const navBurger = document.getElementById("navBurger");
-const navContent = document.getElementById("navContent");
+const nav = document.getElementById("nav");
 
 navBurger.onclick = () => {
   navBurger.classList.toggle("active-nav");
-  navContent.classList.toggle("active-nav");
+  nav.classList.toggle("active-nav");
 };
 
 // Toggle buttons in settings
@@ -18,37 +18,41 @@ soundsTogleBtn.onclick = () => {
   soundsTogleBtn.classList.toggle("is-on");
 };
 
+// New game
+const newGameButton = document.getElementById("newGameButton");
+const newGame = () => {
+  numberOfDecks = document.getElementById("deckNumberChoose");
+  allDecks = [];
+  createDecks(numberOfDecks.value);
+  shuffleDeck();
+  addShuffleCard();
+  changeDeckImgSize();
+  changePlayerBalance();
+};
+
+newGameButton.onclick = () => {
+  // Close settings
+  navBurger.classList.toggle("active-nav");
+  nav.classList.toggle("active-nav");
+
+  newGame();
+
+  // Docasny
+  console.clear();
+  setTimeout(() => {
+    for (let i = 0; i < allDecks.length; i++) {
+      if (allDecks[i].suit === undefined) console.log(i + 1, allDecks[i].value);
+      else console.log(i + 1, allDecks[i].value + " " + allDecks[i].suit);
+    }
+  }, 250);
+};
+
 // Create decks of cards
 const suits = ["♠", "♣", "♦", "♥"],
   values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"],
   shuffleCard = "Shuffle Card";
 let allDecks = [];
 let numberOfDecks = document.getElementById("deckNumberChoose");
-const newGameButton = document.getElementById("newGameButton");
-
-newGameButton.onclick = () => {
-  // Close settings
-  navBurger.classList.toggle("active-nav");
-  navContent.classList.toggle("active-nav");
-
-  // New game
-  numberOfDecks = document.getElementById("deckNumberChoose");
-  allDecks = [];
-  createDecks(numberOfDecks.value);
-  shuffleDeck();
-  addShuffleCard();
-
-  //! Docasny
-  console.clear();
-  setTimeout(() => {
-    for (let i = 0; i < allDecks.length; i++) {
-      if (allDecks[i].suit === !undefined)
-        console.log(i + 1, allDecks[i].value + " " + allDecks[i].suit);
-      console.log(i + 1, allDecks[i].value);
-    }
-  }, 250);
-};
-
 const createDecks = (num) => {
   for (let i = 0; i < num; i++) {
     let curDeck = [];
@@ -77,34 +81,73 @@ shuffleDeck();
 
 // Add shuffle card to the deck
 const addShuffleCard = () => {
-  switch (numberOfDecks.value) {
-    case "1":
+  switch (Number(numberOfDecks.value)) {
+    case 1:
       allDecks.splice(Math.floor(allDecks.length * 0.8), 0, {
         value: shuffleCard,
       });
       break;
-    case "2":
+    case 2:
       allDecks.splice(Math.floor(allDecks.length * 0.85), 0, {
         value: shuffleCard,
       });
       break;
-    case "4":
-    case "6":
-    case "8":
+    case 4:
+    case 6:
+    case 8:
       allDecks.splice(Math.floor(allDecks.length * 0.9), 0, {
         value: shuffleCard,
       });
       break;
     default:
-      console.log("Error");
+      console.log("Add shuffle card Error");
       break;
   }
 };
 addShuffleCard();
 
-// Console log decks
-for (let i = 0; i < allDecks.length; i++) {
-  if (allDecks[i].suit === !undefined)
-    console.log(i + 1, allDecks[i].value + " " + allDecks[i].suit);
-  console.log(i + 1, allDecks[i].value);
+// Change deck img according to deck size
+const deckImgSize = document.getElementById("deckOfCards");
+const changeDeckImgSize = () => {
+  deckImgSize.src =
+    "./assets/img/decksAndCards/deck3D-" + numberOfDecks.value + "d.png";
+};
+changeDeckImgSize();
+
+// Change deck img according to deck size
+let balanceChoose = document.getElementById("balanceChoose");
+let playerBalance = document.getElementById("playerBalance");
+const changePlayerBalance = () => {
+  playerBalance.innerHTML = Number(balanceChoose.value);
+};
+changePlayerBalance();
+
+// Change cursor to clicked chip
+const chips = document.getElementsByClassName("chip");
+const table = document.getElementById("table-container");
+let previousChip, previousSelectedChip;
+for (let i = 0; i < chips.length; i++) {
+  chips[i].addEventListener("click", () => {
+    if (
+      !table.classList.contains("chipCursor") ||
+      previousChip !== chips[i].getAttribute("data-value")
+    ) {
+      if (previousSelectedChip !== undefined) 
+        chips[previousSelectedChip].classList.remove("selected");
+      chips[i].classList.add("selected");
+      previousChip = chips[i].getAttribute("data-value");
+      previousSelectedChip = chips[i].getAttribute("data-index");
+      table.classList.add("chipCursor");
+      table.style.setProperty(
+        "--url",
+        'url("../assets/img/chips75x75/coin' +
+          chips[i].getAttribute("data-value") +
+          '.png")'
+      );
+    } else {
+      table.classList.remove("chipCursor");
+      table.style.setProperty("--url", "");
+      chips[i].classList.remove("selected");
+    }
+  });
 }

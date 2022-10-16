@@ -12,7 +12,7 @@
   <body>
     <div id="table-container">
       <!-- Navbar -->
-      <div class="nav">
+      <div class="nav" id="nav">
         <div class="navBurger" id="navBurger">
           <span></span>
           <span></span>
@@ -58,6 +58,9 @@
         </nav>
       </div>
       <!-- Deck -->
+      <div class="fullDeck">
+        <img src="./assets/img/decksAndCards/deck3D-2d.png" id="deckOfCards">
+      </div>
 
       <!-- Hands -->
         <!-- Dealer Hand -->
@@ -68,6 +71,10 @@
 
       <!-- Bottom menu -->
       <div class="menus">
+        <!-- Balance -->
+        <div class="balance">
+          <p>Balance: <span id="playerBalance">0</span></p>
+        </div>
         <div class="gameMenu">
           <button class="menuItem" id="splitBtn">SPLIT</button>
           <button class="menuItem" id="doubleBtn">DOUBLE</button>
@@ -79,15 +86,15 @@
           <button class="menuItem" id="newBetBtn">NEW <br> BET</button>
           <button class="menuItem" id="doubleBetBtn">BET 2X</button>
         </div>
-        <div class="chipsMenu">
-          <img class="menuItem" src="./assets/img/chips/coin25.png">
-          <img class="menuItem" src="./assets/img/chips/coin5.png">
-          <img class="menuItem" src="./assets/img/chips/coin100.png">
-          <img class="menuItem" src="./assets/img/chips/coin500.png">
-          <img class="menuItem" src="./assets/img/chips/coin1k.png">
-          <img class="menuItem" src="./assets/img/chips/coin2.k.png">
-          <img class="menuItem" src="./assets/img/chips/coin5k.png">
-          <img class="menuItem" src="./assets/img/chips/coin10k.png">
+        <div class="chipsMenu active-menu">
+          <img class="menuItem chip" data-value="5" data-index="0" src="./assets/img/chips/coin5.png">
+          <img class="menuItem chip" data-value="25" data-index="1" src="./assets/img/chips/coin25.png">
+          <img class="menuItem chip" data-value="100" data-index="2" src="./assets/img/chips/coin100.png">
+          <img class="menuItem chip" data-value="500" data-index="3" src="./assets/img/chips/coin500.png">
+          <img class="menuItem chip" data-value="1k" data-index="4" src="./assets/img/chips/coin1k.png">
+          <img class="menuItem chip" data-value="2k" data-index="5" src="./assets/img/chips/coin2k.png">
+          <img class="menuItem chip" data-value="5k" data-index="6" src="./assets/img/chips/coin5k.png">
+          <img class="menuItem chip" data-value="10k" data-index="7" src="./assets/img/chips/coin10k.png">
         </div>
       </div>
     </div>

@@ -59,15 +59,73 @@
       </div>
       <!-- Deck -->
       <div class="fullDeck">
-        <img src="./assets/img/decksAndCards/deck3D-2d.png" id="deckOfCards">
+        <img src="./assets/img/decksAndCards/deck3D-2d.png" id="deckOfCards" />
       </div>
+      <!-- Info (Card Counting and Deck size)-->
+      <div class="info" id="info">
+        <div class="cardCounting">
+          <p>Hi-Lo True</p>
+          <p>
+            <span id="cardCounting-trueValue">0.0</span
+            ><span id="cardCounting-HiLo">(0)</span>
+          </p>
+        </div>
+        <div class="deckSize">
+          <p>Deck Depth</p>
+          <p id="deckDepth">1.00</p>
+        </div>
+      </div>
+      <!-- Background text -->
+      <!-- <div class="bcg">
+        <img src="./assets/img/bcg/POHRIVENYTEXTXD.png" alt="">
+      </div> -->
 
-      <!-- Hands -->
-        <!-- Dealer Hand -->
-        <!-- Card Counting -->
-        <!-- Player Hands -->
-          <!-- N Hand -->
-          <!-- Bet Circle -->
+      <!-- Dealer Hand -->
+      <div class="dealerHand hand">
+        <div class="card card-up"></div>
+        <img class="card" src="./assets/img/decksAndCards/card.png" />
+      </div>
+      <!-- Player Hands -->
+      <div class="leftHand hand">
+        <div class="mainHand splitted">
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+        </div>
+        <div class="splitHand">
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+        </div>
+        <!-- Bet Circle -->
+        <div class="betCircle">
+          <p class="middleHandBet"></p>
+        </div>
+      </div>
+      <div class="rightHand hand">
+        <div class="mainHand splitted">
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+        </div>
+        <div class="splitHand">
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+          <img class="card" src="./assets/img/decksAndCards/card.png" />
+        </div>
+        <!-- Bet Circle -->
+        <div class="betCircle">
+          <p class="middleHandBet"></p>
+        </div>
+      </div>
 
       <!-- Bottom menu -->
       <div class="menus">
@@ -83,18 +141,61 @@
         </div>
         <div class="betMenu">
           <button class="menuItem" id="rebetBtn">REBET</button>
-          <button class="menuItem" id="newBetBtn">NEW <br> BET</button>
+          <button class="menuItem" id="newBetBtn">
+            NEW <br />
+            BET
+          </button>
           <button class="menuItem" id="doubleBetBtn">BET 2X</button>
         </div>
         <div class="chipsMenu active-menu">
-          <img class="menuItem chip" data-value="5" data-index="0" src="./assets/img/chips/coin5.png">
-          <img class="menuItem chip" data-value="25" data-index="1" src="./assets/img/chips/coin25.png">
-          <img class="menuItem chip" data-value="100" data-index="2" src="./assets/img/chips/coin100.png">
-          <img class="menuItem chip" data-value="500" data-index="3" src="./assets/img/chips/coin500.png">
-          <img class="menuItem chip" data-value="1k" data-index="4" src="./assets/img/chips/coin1k.png">
-          <img class="menuItem chip" data-value="2k" data-index="5" src="./assets/img/chips/coin2k.png">
-          <img class="menuItem chip" data-value="5k" data-index="6" src="./assets/img/chips/coin5k.png">
-          <img class="menuItem chip" data-value="10k" data-index="7" src="./assets/img/chips/coin10k.png">
+          <img
+            class="menuItem chip"
+            data-value="5"
+            data-index="0"
+            src="./assets/img/chips/coin5.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="25"
+            data-index="1"
+            src="./assets/img/chips/coin25.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="100"
+            data-index="2"
+            src="./assets/img/chips/coin100.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="500"
+            data-index="3"
+            src="./assets/img/chips/coin500.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="1k"
+            data-index="4"
+            src="./assets/img/chips/coin1k.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="2k"
+            data-index="5"
+            src="./assets/img/chips/coin2k.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="5k"
+            data-index="6"
+            src="./assets/img/chips/coin5k.png"
+          />
+          <img
+            class="menuItem chip"
+            data-value="10k"
+            data-index="7"
+            src="./assets/img/chips/coin10k.png"
+          />
         </div>
       </div>
     </div>

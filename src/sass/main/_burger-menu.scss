@@ -68,7 +68,12 @@
 
   &:nth-child(1) {
     border-top: 1px solid white;
-    padding-top: 1.25em;
+    padding-top: 1em;
+  }  
+  
+  &:nth-child(2) {
+    border-bottom: 1px solid white;
+    padding-bottom: 1em;
   }
 
   p {
@@ -124,5 +129,10 @@
     );
     color: var(--clr-neutral-900);
     cursor: pointer;
+    transition: .3s all;
+
+    &:hover {
+      scale: 1.1;
+    }
   }
 }

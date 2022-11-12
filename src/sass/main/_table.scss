@@ -3,6 +3,7 @@
 #table-container {
   @include tableCircleGradient(var(--clr-table-light), var(--clr-table-dark));
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
   --url: "";
   cursor: var(--url) 37.5 37.5, auto;

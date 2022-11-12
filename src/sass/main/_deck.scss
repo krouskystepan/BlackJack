@@ -1,10 +1,10 @@
 @use "../abstracts/" as *;
 
 .fullDeck {
-  position: relative;
-  top: 10%;
-  right: -82.5%;
-  rotate: -15deg;
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  rotate: -45deg;
   z-index: 0;
   width: 150px;
   height: 220px;

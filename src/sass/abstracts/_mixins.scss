@@ -1,5 +1,5 @@
 @mixin tableCircleGradient($clr-1, $clr-2) {
-  background-color: $clr-1;
+  background-color: $clr-2;
   background-image: radial-gradient(circle at center, $clr-1, $clr-2);
 }
 

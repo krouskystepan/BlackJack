@@ -9,8 +9,15 @@ navBurger.onclick = () => {
 
 // Toggle buttons in settings
 const ccToggleBtn = document.getElementById("ccToggleBtn");
+const infoPanel = document.getElementById("info");
 ccToggleBtn.onclick = () => {
   ccToggleBtn.classList.toggle("is-on");
+
+  if (ccToggleBtn.classList.contains("is-on")) {
+    infoPanel.classList.add("active-panel");
+  } else {
+    infoPanel.classList.remove("active-panel");
+  }
 };
 
 const soundsTogleBtn = document.getElementById("soundsTogleBtn");
@@ -28,6 +35,8 @@ const newGame = () => {
   addShuffleCard();
   changeDeckImgSize();
   changePlayerBalance();
+
+  document.getElementById("deckDepth").innerText = Number(numberOfDecks.value).toFixed(2);
 };
 
 newGameButton.onclick = () => {
@@ -66,7 +75,6 @@ const createDecks = (num) => {
   allDecks = allDecks.flatMap((num) => num);
   return allDecks;
 };
-createDecks(numberOfDecks.value);
 
 // Shuffle N decks
 const shuffleDeck = () => {
@@ -77,7 +85,6 @@ const shuffleDeck = () => {
     allDecks[i] = oldValue;
   }
 };
-shuffleDeck();
 
 // Add shuffle card to the deck
 const addShuffleCard = () => {
@@ -104,7 +111,6 @@ const addShuffleCard = () => {
       break;
   }
 };
-addShuffleCard();
 
 // Change deck img according to deck size
 const deckImgSize = document.getElementById("deckOfCards");
@@ -112,17 +118,17 @@ const changeDeckImgSize = () => {
   deckImgSize.src =
     "./assets/img/decksAndCards/deck3D-" + numberOfDecks.value + "d.png";
 };
-changeDeckImgSize();
 
-// Change deck img according to deck size
+// Change balace
 let balanceChoose = document.getElementById("balanceChoose");
 let playerBalance = document.getElementById("playerBalance");
 const changePlayerBalance = () => {
-  playerBalance.innerHTML = Number(balanceChoose.value);
+  playerBalance.innerText = Number(balanceChoose.value).toLocaleString("cs");
 };
-changePlayerBalance();
 
-// Change cursor to clicked chip
+newGame();
+
+// Change cursor to clicked chip and select chip
 const chips = document.getElementsByClassName("chip");
 const table = document.getElementById("table-container");
 let previousChip, previousSelectedChip;
@@ -132,7 +138,7 @@ for (let i = 0; i < chips.length; i++) {
       !table.classList.contains("chipCursor") ||
       previousChip !== chips[i].getAttribute("data-value")
     ) {
-      if (previousSelectedChip !== undefined) 
+      if (previousSelectedChip !== undefined)
         chips[previousSelectedChip].classList.remove("selected");
       chips[i].classList.add("selected");
       previousChip = chips[i].getAttribute("data-value");
@@ -150,4 +156,13 @@ for (let i = 0; i < chips.length; i++) {
       chips[i].classList.remove("selected");
     }
   });
+
+  // Hover on chips bcs Safari sucks :)
+  chips[i].addEventListener("mouseenter", () => {
+    chips[i].style.scale = "1.15";
+  });
+  chips[i].addEventListener("mouseout", () => {
+    chips[i].style.scale = "1";
+  });
 }
+

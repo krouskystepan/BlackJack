@@ -1,0 +1,138 @@
+@use "../abstracts/" as *;
+
+.info {
+  width: 125px;
+  height: 150px;
+  position: absolute;
+  top: 8.5%;
+  left: 10%;
+  border-radius: 25px;
+  background-color: rgb(0 0 0 / 0.6);
+  text-align: center;
+  color: var(--clr-neutral-100);
+  font-family: "Signika";
+  display: none;
+
+  &.active-panel {
+    display: block;
+  }
+
+  .cardCounting {
+    border-bottom: 1px solid var(--clr-neutral-100);
+  }
+
+  .cardCounting,
+  .deckSize {
+    width: 100%;
+    height: 50%;
+  }
+}
+
+.cardCounting,
+.deckSize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hand {
+  --cardWidth: 110px;
+  --cardHeight: 180px;
+  --cardBorderRadius: 15px;
+}
+
+.dealerHand {
+  display: flex;
+  top: 2.5%;
+  position: relative;
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+  margin-inline: auto;
+}
+
+.leftHand,
+.rightHand {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  background-color: rgb(0 0 0 / 0.6);
+  left: 50%;
+  transform: translate(-50%);
+  top: 30%;
+}
+
+.mainHand,
+.splitHand {
+  position: absolute;
+  width: calc(100% / 2);
+  height: inherit;
+}
+
+.rightHand {
+  right: 15%;
+  transform: translate(15%);
+}
+.leftHand {
+  left: 15%;
+  transform: translate(-15%);
+}
+
+.mainHand.splitted {
+  left: 0;
+  transform: translate(0);
+  background-color: aqua;
+}
+
+.splitHand {
+  right: 0;
+  background-color: rgb(141, 170, 170);
+}
+
+.betCircle {
+  position: absolute;
+  height: 90px;
+  width: 90px;
+  border: 5px solid black;
+  border-radius: 50%;
+  left: 50%;
+  bottom: -35%;
+  transform: translate(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: var(--clr-neutral-100);
+    font-family: "Signika";
+    font-size: 28px;
+  }
+}
+.card {
+  position: absolute;
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@for $i from 0 to 6 {
+  .card:nth-child(#{$i + 1}) {
+    left: calc(30px * #{$i});
+    z-index: #{$i};
+  }
+
+  .leftHand .card:nth-child(#{$i + 1}),
+  .middleHand .card:nth-child(#{$i + 1}),
+  .rightHand .card:nth-child(#{$i + 1}) {
+    bottom: calc(30px * #{$i});
+  }
+}
+
+.card-up {
+  background-color: white;
+  border-radius: var(--cardBorderRadius);
+}

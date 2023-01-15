@@ -47,76 +47,45 @@
   top: 2.5%;
   position: relative;
   width: var(--cardWidth);
-  height: var(--cardHeight);
+  height: 25%;
   margin-inline: auto;
 }
 
-.leftHand,
-.rightHand {
-  position: absolute;
-  width: 500px;
-  height: 300px;
-  background-color: rgb(0 0 0 / 0.6);
-  left: 50%;
-  transform: translate(-50%);
-  top: 30%;
-}
-
-.mainHand,
-.splitHand {
-  position: absolute;
-  width: calc(100% / 2);
-  height: inherit;
-}
-
-.rightHand {
-  right: 15%;
-  transform: translate(15%);
-}
-.leftHand {
-  left: 15%;
-  transform: translate(-15%);
-}
-
-.mainHand.splitted {
-  left: 0;
-  transform: translate(0);
-  background-color: aqua;
-}
-
-.splitHand {
-  right: 0;
-  background-color: rgb(141, 170, 170);
-}
-
-.betCircle {
-  position: absolute;
-  height: 90px;
-  width: 90px;
-  border: 5px solid black;
-  border-radius: 50%;
-  left: 50%;
-  bottom: -35%;
-  transform: translate(-50%);
+.playerHandContainer {
+  background-color: hsl(240, 100%, 50%, .1);
+  max-width: var(--cardWidth);
+  height: 47.5%;
   display: flex;
   justify-content: center;
-  align-items: center;
-
-  p {
-    color: var(--clr-neutral-100);
-    font-family: "Signika";
-    font-size: 28px;
-  }
+  align-items: flex-end;
+  position: relative;
+  top: 0;
 }
+
+.playerHand {
+  width: var(--cardWidth);
+  height: var(--cardHeight);
+  position: relative;
+}
+
+.playerBet {
+  font-family: "Signika";
+  color: var(--clr-neutral-100);
+  font-size: 24px;
+  position: relative;
+  top: 100%;
+  text-align: center;
+}
+
 .card {
   position: absolute;
   width: var(--cardWidth);
   height: var(--cardHeight);
 
-  img {
-    width: 100%;
-    height: 100%;
-  }
+  // img {
+  //   width: 100%;
+  //   height: 100%;
+  // }
 }
 
 @for $i from 0 to 6 {
@@ -125,14 +94,12 @@
     z-index: #{$i};
   }
 
-  .leftHand .card:nth-child(#{$i + 1}),
-  .middleHand .card:nth-child(#{$i + 1}),
-  .rightHand .card:nth-child(#{$i + 1}) {
+  .playerHand .card:nth-child(#{$i + 1}) {
     bottom: calc(30px * #{$i});
   }
 }
 
-.card-up {
+.cardUp {
   background-color: white;
   border-radius: var(--cardBorderRadius);
 }

@@ -82,48 +82,20 @@
 
       <!-- Dealer Hand -->
       <div class="dealerHand hand">
-        <div class="card card-up"></div>
+        <div class="card cardUp"></div>
         <img class="card" src="./assets/img/decksAndCards/card.png" />
       </div>
       <!-- Player Hands -->
-      <div class="leftHand hand">
-        <div class="mainHand splitted">
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-        </div>
-        <div class="splitHand">
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-        </div>
-        <!-- Bet Circle -->
-        <div class="betCircle">
-          <p class="middleHandBet"></p>
-        </div>
-      </div>
-      <div class="rightHand hand">
-        <div class="mainHand splitted">
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-        </div>
-        <div class="splitHand">
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-          <img class="card" src="./assets/img/decksAndCards/card.png" />
-        </div>
-        <!-- Bet Circle -->
-        <div class="betCircle">
-          <p class="middleHandBet"></p>
+      <div class="playerHandContainer">
+        <div class="playerHand hand">
+          <div class="mainHand">
+            <img class="card" src="./assets/img/decksAndCards/card.png" />
+            <img class="card" src="./assets/img/decksAndCards/card.png" />
+            <img class="card" src="./assets/img/decksAndCards/card.png" />
+            <img class="card" src="./assets/img/decksAndCards/card.png" />
+            <img class="card" src="./assets/img/decksAndCards/card.png" />
+          </div>
+          <p class="playerBet">Bet: <span id="player-bet">0</span></p>
         </div>
       </div>
 
@@ -133,7 +105,7 @@
         <div class="balance">
           <p>Balance: <span id="playerBalance">0</span></p>
         </div>
-        <div class="gameMenu">
+        <div class="gameMenu active-menu">
           <button class="menuItem" id="splitBtn">SPLIT</button>
           <button class="menuItem" id="doubleBtn">DOUBLE</button>
           <button class="menuItem" id="hitBtn">HIT</button>
@@ -147,7 +119,7 @@
           </button>
           <button class="menuItem" id="doubleBetBtn">BET 2X</button>
         </div>
-        <div class="chipsMenu active-menu">
+        <div class="chipsMenu">
           <img
             class="menuItem chip"
             data-value="5"

@@ -10,19 +10,38 @@ navBurger.onclick = () => {
 // Toggle buttons in settings
 const ccToggleBtn = document.getElementById("ccToggleBtn");
 const infoPanel = document.getElementById("info");
+const deckImage = document.getElementById("fullDeck");
 ccToggleBtn.onclick = () => {
   ccToggleBtn.classList.toggle("is-on");
 
   if (ccToggleBtn.classList.contains("is-on")) {
     infoPanel.classList.add("active-panel");
+    deckImage.classList.add("hidden");
   } else {
     infoPanel.classList.remove("active-panel");
+    deckImage.classList.remove("hidden");
   }
 };
 
 const soundsTogleBtn = document.getElementById("soundsTogleBtn");
+const PLAYER_WIN_SOUND = new Audio("../assets/sounds/playerWin.mp3");
+const DEALER_WIN_SOUND = new Audio("../assets/sounds/dealerWin.mp3");
+const CARD_SHUFFLE_SOUND = new Audio("../assets/sounds/cardShuffle.mp3");
+let SOUND_VOLUME = 0.0;
+PLAYER_WIN_SOUND.volume = SOUND_VOLUME;
+DEALER_WIN_SOUND.volume = SOUND_VOLUME;
+CARD_SHUFFLE_SOUND.volume = SOUND_VOLUME;
 soundsTogleBtn.onclick = () => {
   soundsTogleBtn.classList.toggle("is-on");
+
+  if (soundsTogleBtn.classList.contains("is-on")) {
+    SOUND_VOLUME = 0.3;
+  } else {
+    SOUND_VOLUME = 0.0;
+  }
+  PLAYER_WIN_SOUND.volume = SOUND_VOLUME;
+  DEALER_WIN_SOUND.volume = SOUND_VOLUME;
+  CARD_SHUFFLE_SOUND.volume = SOUND_VOLUME;
 };
 
 // Change deck img according to deck size
@@ -34,63 +53,37 @@ const changeDeckImgSize = () => {
 
 // Change balace
 let balanceChoose = document.getElementById("balanceChoose");
-let playerBalance = document.getElementById("playerBalance");
+let playerBalanceHTML = document.getElementById("playerBalance");
+let playerBalance = 0;
 const changePlayerBalance = () => {
-  playerBalance.innerText = Number(balanceChoose.value).toLocaleString("cs");
+  playerBalance = Number(balanceChoose.value);
+  playerBalanceHTML.innerText = playerBalance.toLocaleString("cs");
 };
-
-// Change cursor to clicked chip and select chip
-const chips = document.getElementsByClassName("chip");
-const table = document.getElementById("table-container");
-let previousChip, previousSelectedChip;
-for (let i = 0; i < chips.length; i++) {
-  chips[i].addEventListener("click", () => {
-    if (
-      !table.classList.contains("chipCursor") ||
-      previousChip !== chips[i].getAttribute("data-value")
-    ) {
-      if (previousSelectedChip !== undefined)
-        chips[previousSelectedChip].classList.remove("selected");
-      chips[i].classList.add("selected");
-      previousChip = chips[i].getAttribute("data-value");
-      previousSelectedChip = chips[i].getAttribute("data-index");
-      table.classList.add("chipCursor");
-      table.style.setProperty(
-        "--url",
-        'url("../assets/img/chips75x75/coin' +
-          chips[i].getAttribute("data-value") +
-          '.png")'
-      );
-    } else {
-      table.classList.remove("chipCursor");
-      table.style.setProperty("--url", "");
-      chips[i].classList.remove("selected");
-    }
-  });
-
-  // Hover on chips bcs Safari sucks :)
-  chips[i].addEventListener("mouseenter", () => {
-    chips[i].style.scale = "1.15";
-  });
-  chips[i].addEventListener("mouseout", () => {
-    chips[i].style.scale = "1";
-  });
-}
 
 // New game
 const newGameButton = document.getElementById("newGameButton");
 const newGame = () => {
+  console.clear();
   numberOfDecks = document.getElementById("deckNumberChoose");
   allDecks = [];
+  playerCards = [];
+  dealerCards = [];
+  currentDeckIndex = 0;
+  totalBet = 0;
+  cardCount = 0;
+  cardCountingValue.innerText = cardCount;
   createDecks(numberOfDecks.value);
   shuffleDeck();
-  addShuffleCard();
   changeDeckImgSize();
   changePlayerBalance();
-
-  document.getElementById("deckDepth").innerText = Number(
-    numberOfDecks.value
-  ).toFixed(2);
+  updateBalance();
+  playerHand.innerHTML = "";
+  dealerHand.innerHTML = "";
+  gameMenu.classList.remove("active-menu");
+  betMenu.classList.remove("active-menu");
+  chipsMenu.classList.add("active-menu");
+  clearBetButton.classList.add("active");
+  betButton.classList.add("active");
 };
 
 newGameButton.onclick = () => {
@@ -99,21 +92,11 @@ newGameButton.onclick = () => {
   nav.classList.toggle("active-nav");
 
   newGame();
-
-  // Docasny
-  console.clear();
-  setTimeout(() => {
-    for (let i = 0; i < allDecks.length; i++) {
-      if (allDecks[i].suit === undefined) console.log(i + 1, allDecks[i].value);
-      else console.log(i + 1, allDecks[i].value + " " + allDecks[i].suit);
-    }
-  }, 250);
 };
 
 // Create decks of cards
 const suits = ["♠", "♣", "♦", "♥"],
-  values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"],
-  shuffleCard = "Shuffle Card";
+  values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 let allDecks = [];
 let currentDeckIndex = 0;
 let numberOfDecks = document.getElementById("deckNumberChoose");
@@ -128,74 +111,106 @@ const createDecks = (num) => {
     allDecks.push(curDeck);
   }
   allDecks = allDecks.flatMap((num) => num);
+
   return allDecks;
 };
 
 // Shuffle N decks
+let documentSound = false;
 const shuffleDeck = () => {
+  if (documentSound) {
+    CARD_SHUFFLE_SOUND.play();
+  }
+  documentSound = true;
   for (let i = allDecks.length - 1; i > 0; i--) {
     const newIndex = Math.floor(Math.random() * (i + 1));
     const oldValue = allDecks[newIndex];
     allDecks[newIndex] = allDecks[i];
     allDecks[i] = oldValue;
   }
-};
-
-// Add shuffle card to the deck
-const addShuffleCard = () => {
-  switch (Number(numberOfDecks.value)) {
-    case 1:
-      allDecks.splice(Math.floor(allDecks.length * 0.8), 0, {
-        value: shuffleCard,
-      });
-      break;
-    case 2:
-      allDecks.splice(Math.floor(allDecks.length * 0.85), 0, {
-        value: shuffleCard,
-      });
-      break;
-    case 4:
-    case 6:
-    case 8:
-      allDecks.splice(Math.floor(allDecks.length * 0.9), 0, {
-        value: shuffleCard,
-      });
-      break;
-    default:
-      console.log("Add shuffle card Error");
-      break;
+  
+  for (let i = 0; i < allDecks.length; i++) {
+    if (allDecks[i].suit === undefined) console.log(i + 1, allDecks[i].value);
+    else console.log(i + 1, allDecks[i].value + " " + allDecks[i].suit);
   }
 };
 
 // Get next card from the deck
+const cardCountingValue = document.getElementById("cardCountingValue");
 const getNextCard = () => {
   let card = allDecks[currentDeckIndex];
   currentDeckIndex++;
   if (currentDeckIndex === allDecks.length) {
+    createDecks(document.getElementById("deckNumberChoose"));
     shuffleDeck();
+    cardCount = 0;
+    cardCountingValue.innerText = 0;
     currentDeckIndex = 0;
   }
-  if (card.value === shuffleCard) {
-    addShuffleCard();
-  }
-  // if (card.value !== shuffleCard) {
-  //   cardCount += countCards(card);
-  // }
   return card;
 };
 
 // Game logic
 let playerCards = [];
 let dealerCards = [];
-let currentBet = 0;
-let cardCount = 0;
 let gameOver = false;
+let hasBJ = false;
+let cardCount = 0;
 
 // Deal cards to player and dealer
+// CALL THIS AFTER BET TO GIVE 2 CARDS
 const dealCards = () => {
   if (!gameOver) {
-    playerCards = [getNextCard(), getNextCard()];
-    dealerCards = [getNextCard(), getNextCard()];
+    playerCards.push(getNextCard());
+    dealerCards.push(getNextCard());
+    playerCards.push(getNextCard());
+
+    // dealerCards.push({value: "A"});
+    // dealerCards.push({value: "10"});
+
+    // console.log("Player's hand: ", playerCards);
+    // console.log("Player's score: ", getHandScore(playerCards));
+    // console.log("Dealer's hand: ", dealerCards);
+    // console.log("Dealer's score: ", getHandScore(dealerCards));
+
+    playerCards.map((card) => {
+      if (getCardValue(card) >= 2 && getCardValue(card) <= 6) {
+        cardCount++;
+      } else if (getCardValue(card) >= 10 || getCardValue(card) === 1) {
+        cardCount--;
+      }
+    });
+    dealerCards.map((card) => {
+      if (getCardValue(card) >= 2 && getCardValue(card) <= 6) {
+        cardCount++;
+      } else if (getCardValue(card) >= 10 || getCardValue(card) === 1) {
+        cardCount--;
+      }
+    });
+
+    cardCountingValue.innerText = cardCount;
+    updateDisplay();
+
+    dealerCards.push(getNextCard());
+
+    dealerCards.slice(1).map((card) => {
+      if (getCardValue(card) >= 2 && getCardValue(card) <= 6) {
+        cardCount++;
+      } else if (getCardValue(card) >= 10 || getCardValue(card) === 1) {
+        cardCount--;
+      }
+    });
+
+    // Check for blackjack hand
+    if (getHandScore(playerCards) === 21) {
+      gameOver = true;
+      updateDisplay();
+      determineWinner();
+    } else if (getHandScore(dealerCards) === 21) {
+      gameOver = true;
+      updateDisplay();
+      determineWinner();
+    }
   }
 };
 
@@ -230,56 +245,302 @@ const getHandScore = (cards) => {
   return score;
 };
 
-// Determine the winner of the round
-const determineWinner = () => {
-  let playerScore = getHandScore(playerCards);
-  let dealerScore = getHandScore(dealerCards);
+// Update the player's and dealer hands
+const playerHand = document.getElementById("playerHand");
+const updateDisplay = () => {
+  playerHand.innerHTML = `
+    ${playerCards
+      .map(
+        (card) =>
+          `    
+          <div class="card ${card.suit} cardUp">
+            <div class="top">
+            <span class="value">${card.value}</span>
+              <span class="suit">${card.suit}</span>
+            </div>
+            <div class="bottom">
+              <span class="value">${card.value}</span>
+              <span class="suit">${card.suit}</span>
+            </div>
+          </div>
+          `
+      )
+      .join("")}
+  `;
 
-  if (playerScore === 21 && playerCards.length === 2) {
-    return "Blackjack - Player";
-  } else if (dealerScore === 21 && dealerCards.length === 2) {
-    return "Blackjack - Dealer";
-  } else if (playerScore > 21) {
-    return "Player busts, dealer wins";
-  } else if (dealerScore > 21) {
-    return "Dealer busts, player wins";
-  } else if (playerScore > dealerScore) {
-    return "Player wins";
-  } else if (dealerScore > playerScore) {
-    return "Dealer wins";
+  let dealerHandHTML = `    
+  <div class="card ${dealerCards[0].suit} cardUp">
+    <div class="top">
+    <span class="value">${dealerCards[0].value}</span>
+      <span class="suit">${dealerCards[0].suit}</span>
+    </div>
+    <div class="bottom">
+      <span class="value">${dealerCards[0].value}</span>
+      <span class="suit">${dealerCards[0].suit}</span>
+    </div>
+  </div>
+  `;
+
+  if (gameOver) {
+    dealerHandHTML = `
+        ${dealerCards
+          .map(
+            (card) =>
+              `    
+            <div class="card ${card.suit} cardUp">
+              <div class="top">
+              <span class="value">${card.value}</span>
+                <span class="suit">${card.suit}</span>
+              </div>
+              <div class="bottom">
+                <span class="value">${card.value}</span>
+                <span class="suit">${card.suit}</span>
+              </div>
+            </div>
+            `
+          )
+          .join("")}
+      `;
   } else {
-    return "Push";
+    dealerHandHTML += `
+        <img class="card" src="./assets/img/decksAndCards/card.png" />
+      `;
+  }
+  dealerHand.innerHTML = dealerHandHTML;
+};
+
+// Determine the winner of the round
+const winnerText = document.getElementById("winnerText");
+const returnOutput = (who) => {
+  playerCards = [];
+  dealerCards = [];
+  gameOver = false;
+  switch (who) {
+    case "PlayerBJ":
+      playerBalance += Math.floor((3 / 2) * totalBet) + totalBet;
+      totalBet = 0;
+      hasBJ = true;
+      PLAYER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Player has a blackjack!";
+      return "Player has a blackjack!";
+    case "DealerBJ":
+      totalBet = 0;
+      hasBJ = true;
+      DEALER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Dealer has a blackjack!";
+      return "Dealer has a blackjack!";
+    case "DealerBUST":
+      playerBalance += totalBet * 2;
+      totalBet = 0;
+      PLAYER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Dealer busts, player wins";
+      return "Dealer busts, player wins";
+    case "PlayerBUST":
+      totalBet = 0;
+      DEALER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Player busts, dealer wins";
+      return "Player busts, dealer wins";
+    case "PlayerWIN":
+      playerBalance += totalBet * 2;
+      totalBet = 0;
+      PLAYER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Player wins";
+      return "Player wins";
+    case "DealerWIN":
+      totalBet = 0;
+      DEALER_WIN_SOUND.play();
+      updateBalance();
+      winnerText.innerText = "Dealer wins";
+      return "Dealer wins";
+    case "PUSH":
+      playerBalance += totalBet;
+      totalBet = 0;
+      updateBalance();
+      winnerText.innerText = "Push";
+      return "Push";
+    default:
+      break;
   }
 };
 
+let previousBet;
+const determineWinner = () => {
+  cardCountingValue.innerText = cardCount;
+  handEnd();
+  previousBet = totalBet;
+  if (playerCards.length === 2 && getHandScore(playerCards) === 21) {
+    return returnOutput("PlayerBJ");
+  } else if (dealerCards.length === 2 && getHandScore(dealerCards) === 21) {
+    return returnOutput("DealerBJ");
+  } else if (getHandScore(playerCards) > 21) {
+    return returnOutput("PlayerBUST");
+  } else if (getHandScore(dealerCards) > 21) {
+    return returnOutput("DealerBUST");
+  } else if (getHandScore(playerCards) > getHandScore(dealerCards)) {
+    return returnOutput("PlayerWIN");
+  } else if (getHandScore(dealerCards) > getHandScore(playerCards)) {
+    return returnOutput("DealerWIN");
+  } else {
+    return returnOutput("PUSH");
+  }
+};
+
+// Menu
+const gameMenu = document.getElementById("gameMenu");
+const betMenu = document.getElementById("betMenu");
+const chipsMenu = document.getElementById("chipsMenu");
+const handEnd = () => {
+  if (hasBJ) return;
+  gameMenu.classList.remove("active-menu");
+  chipsMenu.classList.remove("active-menu");
+  betMenu.classList.add("active-menu");
+};
+
+// Game Menu
 const hitButton = document.getElementById("hitBtn");
 hitButton.addEventListener("click", () => {
   if (!gameOver) {
+    previousBet = totalBet;
     playerCards.push(getNextCard());
-    let playerScore = getHandScore(playerCards);
-    console.log("Player's hand: ", playerCards);
-    console.log("Player's score: ", playerScore);
-    if (playerScore > 21) {
+    // console.log("Player's hand: ", playerCards);
+    // console.log("Player's score: ", getHandScore(playerCards));
+    updateDisplay();
+    if (getHandScore(playerCards) > 21) {
       gameOver = true;
-      console.log("Player busts!");
+      updateDisplay();
       let winner = determineWinner();
-      console.log("Winner: ", winner);
+      console.log("Winner:", winner);
     }
   }
 });
 
 const standButton = document.getElementById("standBtn");
-standButton.addEventListener("click", () => {
+const standFce = () => {
   if (!gameOver) {
+    previousBet = totalBet;
     gameOver = true;
     while (getHandScore(dealerCards) < 17) {
       dealerCards.push(getNextCard());
     }
-    console.log("Dealer's hand: ", dealerCards);
-    console.log("Dealer's score: ", getHandScore(dealerCards));
+    updateDisplay();
+    // console.log("Dealer's hand: ", dealerCards);
+    // console.log("Dealer's score: ", getHandScore(dealerCards));
     let winner = determineWinner();
-    console.log("Winner: ", winner);
+    console.log("Winner:", winner);
   }
+};
+standButton.addEventListener("click", standFce);
+
+const doubleButton = document.getElementById("doubleBtn");
+doubleButton.onclick = () => {
+  if (!gameOver && playerCards.length === 2) {
+    if (totalBet * 2 > playerBalance) return alert("Na to nemas zetony");
+    playerCards.push(getNextCard());
+    // console.log("Player's hand: ", playerCards);
+    // console.log("Player's score: ", getHandScore(playerCards));
+
+    playerBalance -= totalBet;
+    totalBet *= 2;
+    updateBalance();
+
+    if (getHandScore(playerCards) > 21) {
+      updateDisplay();
+      gameOver = true;
+      let winner = determineWinner();
+      console.log("Winner:", winner);
+    } else {
+      standFce();
+    }
+    document
+      .getElementById("playerHand")
+      .getElementsByClassName("card")[2]
+      .classList.add("double");
+  }
+};
+
+// Bet Menu
+const rebetButton = document.getElementById("rebetBtn");
+rebetButton.addEventListener("click", () => {
+  if (previousBet > playerBalance) return alert("Na to nemas zetony");
+  totalBet = previousBet;
+  playerBalance -= totalBet;
+  updateBalance();
+  dealCards();
+  if (hasBJ) return (hasBJ = false);
+  gameMenu.classList.add("active-menu");
+  betMenu.classList.remove("active-menu");
 });
+
+const doubleBetButton = document.getElementById("doubleBetBtn");
+doubleBetButton.addEventListener("click", () => {
+  if (previousBet * 2 > playerBalance) return alert("Na to nemas zetony");
+  totalBet = previousBet * 2;
+  playerBalance -= totalBet;
+  updateBalance();
+  dealCards();
+  if (hasBJ) return (hasBJ = false);
+  betMenu.classList.remove("active-menu");
+  gameMenu.classList.add("active-menu");
+});
+
+const clearBetButton = document.getElementById("clearBetBtn");
+const betButton = document.getElementById("betBtn");
+const newBetButton = document.getElementById("newBetBtn");
+newBetButton.addEventListener("click", () => {
+  betMenu.classList.remove("active-menu");
+  chipsMenu.classList.add("active-menu");
+  clearBetButton.classList.add("active");
+  betButton.classList.add("active");
+});
+
+clearBetButton.addEventListener("click", () => {
+  playerBetHTML.innerText = "0";
+  playerBalance += totalBet;
+  playerBalanceHTML.innerText = playerBalance.toLocaleString("cs");
+  totalBet = 0;
+});
+
+betButton.addEventListener("click", () => {
+  if (totalBet === 0) return;
+  previousBet = totalBet;
+  dealCards();
+  clearBetButton.classList.remove("active");
+  betButton.classList.remove("active");
+  if (hasBJ) {
+    betMenu.classList.add("active-menu");
+    chipsMenu.classList.remove("active-menu");
+  } else {
+    gameMenu.classList.add("active-menu");
+  }
+  chipsMenu.classList.remove("active-menu");
+});
+
+// Chips Menu
+const chips = document.getElementsByClassName("chip");
+const playerBetHTML = document.getElementById("playerBet");
+let totalBet = 0;
+let playerBet;
+
+for (let i = 0; i < chips.length; i++) {
+  chips[i].addEventListener("click", () => {
+    playerBet = Number(chips[i].getAttribute("data-value"));
+
+    if (playerBet > playerBalance) return alert("Na to nemas zetony");
+    playerBalance -= playerBet;
+    totalBet += playerBet;
+    playerBalanceHTML.innerText = playerBalance.toLocaleString("cs");
+    playerBetHTML.innerText = totalBet.toLocaleString("cs");
+  });
+}
+
+const updateBalance = () => {
+  playerBalanceHTML.innerText = playerBalance.toLocaleString("cs");
+  playerBetHTML.innerText = totalBet.toLocaleString("cs");
+};
 
 newGame();

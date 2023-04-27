@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
-
-    <link rel="icon" href="" />
     <title>BlackJack</title>
   </head>
   <body>
@@ -21,7 +19,7 @@
         <nav class="navContent" id="navContent">
           <div class="navElement">
             <p>Sounds</p>
-            <div class="toggle is-on" id="soundsTogleBtn">
+            <div class="toggle is-off" id="soundsTogleBtn">
               <div class="toggleSlider"></div>
             </div>
           </div>
@@ -58,60 +56,50 @@
         </nav>
       </div>
       <!-- Deck -->
-      <div class="fullDeck">
+      <div class="fullDeck" id="fullDeck">
         <img src="./assets/img/decksAndCards/deck3D-2d.png" id="deckOfCards" />
       </div>
-      <!-- Info (Card Counting and Deck size)-->
-      <div class="info" id="info">
-        <div class="cardCounting">
-          <p>Hi-Lo True</p>
-          <p>
-            <span id="cardCounting-trueValue">0.0</span
-            ><span id="cardCounting-HiLo">(0)</span>
-          </p>
-        </div>
-        <div class="deckSize">
-          <p>Deck Depth</p>
-          <p id="deckDepth">1.00</p>
-        </div>
+      <!-- Card Counting -->
+      <div class="info cardCounting" id="info">
+        <p class="hide">
+          Card <br />
+          Counting
+        </p>
+        <p id="cardCountingValue">0</p>
       </div>
-      <!-- Background text -->
-      <!-- <div class="bcg">
-        <img src="./assets/img/bcg/POHRIVENYTEXTXD.png" alt="">
-      </div> -->
+
+      <div class="winnerText">
+        <p id="winnerText"></p>
+      </div>
 
       <!-- Dealer Hand -->
-      <div class="dealerHand hand">
-        <div class="card cardUp"></div>
-        <img class="card" src="./assets/img/decksAndCards/card.png" />
+      <div class="dealerHandContainer">
+        <div class="dealerHand hand" id="dealerHand">
+        </div>
       </div>
-      <!-- Player Hands -->
+      <!-- Player Hand -->
       <div class="playerHandContainer">
-        <div class="playerHand hand">
-          <div class="mainHand">
-            <img class="card" src="./assets/img/decksAndCards/card.png" />
-            <img class="card" src="./assets/img/decksAndCards/card.png" />
-            <img class="card" src="./assets/img/decksAndCards/card.png" />
-            <img class="card" src="./assets/img/decksAndCards/card.png" />
-            <img class="card" src="./assets/img/decksAndCards/card.png" />
-          </div>
-          <p class="playerBet">Bet: <span id="player-bet">0</span></p>
+        <div class="playerHand hand" id="playerHand">
         </div>
       </div>
 
       <!-- Bottom menu -->
       <div class="menus">
-        <!-- Balance -->
-        <div class="balance">
+        <!-- Coins -->
+        <div class="coins">
+          <div class="bet"> 
+            <p>Bet: <span id="playerBet">0</span></p> 
+            <button class="clearBetBtn active" id="clearBetBtn">X</button>
+            <button class="betBtn active" id="betBtn">Bet</button>
+          </div>
           <p>Balance: <span id="playerBalance">0</span></p>
         </div>
-        <div class="gameMenu active-menu">
-          <button class="menuItem" id="splitBtn">SPLIT</button>
+        <div class="gameMenu" id="gameMenu">
           <button class="menuItem" id="doubleBtn">DOUBLE</button>
           <button class="menuItem" id="hitBtn">HIT</button>
           <button class="menuItem" id="standBtn">STAND</button>
         </div>
-        <div class="betMenu">
+        <div class="betMenu" id="betMenu">
           <button class="menuItem" id="rebetBtn">REBET</button>
           <button class="menuItem" id="newBetBtn">
             NEW <br />
@@ -119,7 +107,7 @@
           </button>
           <button class="menuItem" id="doubleBetBtn">BET 2X</button>
         </div>
-        <div class="chipsMenu">
+        <div class="chipsMenu active-menu" id="chipsMenu">
           <img
             class="menuItem chip"
             data-value="5"
@@ -146,25 +134,25 @@
           />
           <img
             class="menuItem chip"
-            data-value="1k"
+            data-value="1000"
             data-index="4"
             src="./assets/img/chips/coin1k.png"
           />
           <img
             class="menuItem chip"
-            data-value="2k"
+            data-value="2500"
             data-index="5"
             src="./assets/img/chips/coin2k.png"
           />
           <img
             class="menuItem chip"
-            data-value="5k"
+            data-value="5000"
             data-index="6"
             src="./assets/img/chips/coin5k.png"
           />
           <img
             class="menuItem chip"
-            data-value="10k"
+            data-value="10000"
             data-index="7"
             src="./assets/img/chips/coin10k.png"
           />

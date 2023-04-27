@@ -5,12 +5,20 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  --url: "";
-  cursor: var(--url) 37.5 37.5, auto;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.winnerText {
+  font-family: "Signika";
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  font-size: 1.75rem;
+  color: var(--clr-neutral-100);
 }

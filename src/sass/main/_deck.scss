@@ -3,7 +3,7 @@
 .fullDeck {
   position: absolute;
   top: 2.5em;
-  right: 5em;
+  left: 5em;
   rotate: -45deg;
   z-index: 0;
   width: 150px;
@@ -14,5 +14,15 @@
     left: 0;
     bottom: 0;
     pointer-events: none;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .fullDeck {
+    display: none;
   }
 }

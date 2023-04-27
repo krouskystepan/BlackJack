@@ -10,6 +10,10 @@ $colors: (
     newGameDark: hsl(47, 80%, 60%),
     bottomMenuLight: hsl(197, 100%, 40%),
     bottomMenuDark: hsl(208, 100%, 40%),
+    clearLight: hsl(346, 92%, 40%),
+    clearDark: hsl(346, 56%, 35%),
+    betDark: hsl(132, 95%, 30%),
+    betLight: hsl(116, 38%, 48%),
   ),
   "neutral": (
     100: hsl(0, 0%, 100%),
@@ -17,4 +21,13 @@ $colors: (
     500: hsl(0, 0%, 50%),
     900: hsl(0, 0%, 0%),
   ),
+  "card": (
+    red: hsl(1, 85%, 45%),
+    black: hsl(0, 0%, 13%),
+  ),
+  "result": (
+    win: hsl(132, 95%, 30%),
+    loss: hsl(353, 86%, 54%),
+    push: hsl(47, 80%, 60%),
+  )
 );
